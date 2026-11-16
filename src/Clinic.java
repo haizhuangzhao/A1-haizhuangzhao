@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Clinic {
 
+    // 08:00 (480) to 16:00 (960), every 30 minutes
     public static final int[] TIME_SLOTS = generateTimeSlots(480, 960, 30);
 
     private final List<Appointment> appointments;

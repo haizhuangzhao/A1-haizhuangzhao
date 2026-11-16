@@ -25,6 +25,7 @@ public abstract class HealthProfessional {
 
         this.id = id;
         this.name = name;
+        // copy it so the caller's list can't be changed later
         this.workingDays = Collections.unmodifiableList(new ArrayList<>(workingDays));
     }
 

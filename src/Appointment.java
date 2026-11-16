@@ -39,6 +39,7 @@ public class Appointment implements Comparable<Appointment> {
 
     @Override
     public int compareTo(Appointment other) {
+        // sort by time, earliest first
         return Integer.compare(this.time, other.time);
     }
 

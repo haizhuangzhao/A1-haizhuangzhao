@@ -85,6 +85,7 @@ public class AssignmentOne {
 
         System.out.println("Adding appointments:");
         System.out.println("---------------------");
+        // times in minutes since midnight: 08:00=480, 08:30=510, 09:00=540, 09:30=570
         System.out.println(clinic.addAppointment(john, gpDou, 480));
         System.out.println(clinic.addAppointment(lily, cardiologistWang, 510));
         System.out.println(clinic.addAppointment(tom, surgeonQiu, 540));
