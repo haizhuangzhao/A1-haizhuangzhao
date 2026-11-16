@@ -1,0 +1,27 @@
+# Compiled class files
+*.class
+
+# Package files
+*.jar
+*.war
+*.ear
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build output
+out/
+build/
+target/
+bin/
+
+# Zip archives (source of truth is the project folder, not the zip)
+*.zip
