@@ -2,22 +2,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Manages all the appointments for the health service: adding, viewing,
- * filtering, sorting and cancelling. Also stops a professional being
- * double-booked.
- *
- * The clinic runs on a fixed daily schedule of 08:00-16:00 in 30-minute
- * steps. The slots are a single constant array so if the hours ever change,
- * that's the only place to edit.
- *
- * Appointments are stored in an ArrayList - it keeps insertion order, allows
- * two patients to book different professionals at the same time, and works
- * with Collections.sort() for ordering.
- */
 public class Clinic {
 
-    /** Time slots in minutes since midnight: 08:00 (480) to 16:00 (960). */
     public static final int[] TIME_SLOTS = generateTimeSlots(480, 960, 30);
 
     private final List<Appointment> appointments;
@@ -35,11 +21,6 @@ public class Clinic {
         return slots;
     }
 
-    /**
-     * Adds an appointment if the info is complete, the time is within opening
-     * hours, and the professional isn't already booked at that slot. Returns
-     * a message saying what happened.
-     */
     public String addAppointment(Patient patient, HealthProfessional professional, int time) {
         if (patient == null || patient.getName() == null || patient.getName().isBlank()) {
             return "Warning: cannot add appointment - a patient name is required.";
@@ -65,12 +46,10 @@ public class Clinic {
                 + " at " + formatTime(time) + ".";
     }
 
-    /** All appointments in insertion order (a copy, so it can't be tampered with). */
     public List<Appointment> getAllAppointments() {
         return new ArrayList<>(appointments);
     }
 
-    /** Appointments for one professional, by id, sorted by time. */
     public List<Appointment> getAppointmentsByProfessional(String professionalId) {
         List<Appointment> matches = new ArrayList<>();
         for (Appointment appointment : appointments) {
@@ -82,7 +61,6 @@ public class Clinic {
         return matches;
     }
 
-    /** Appointments for one patient, by phone number, sorted by time. */
     public List<Appointment> getAppointmentsByPatient(String phoneNumber) {
         List<Appointment> matches = new ArrayList<>();
         for (Appointment appointment : appointments) {
@@ -94,14 +72,12 @@ public class Clinic {
         return matches;
     }
 
-    /** All appointments sorted earliest to latest. */
     public List<Appointment> getAppointmentsSortedByTime() {
         List<Appointment> sorted = new ArrayList<>(appointments);
         Collections.sort(sorted);
         return sorted;
     }
 
-    /** Cancels by professional id + time. Warns if nothing matches. */
     public String cancelAppointment(String professionalId, int time) {
         for (Appointment appointment : appointments) {
             if (appointment.getProfessional().getId().equals(professionalId)
@@ -116,7 +92,6 @@ public class Clinic {
                 + professionalId + " at " + formatTime(time) + ".";
     }
 
-    /** Cancels every appointment for a patient, by phone number. */
     public String cancelAppointmentsByPatient(String phoneNumber) {
         int removed = 0;
         for (int i = appointments.size() - 1; i >= 0; i--) {

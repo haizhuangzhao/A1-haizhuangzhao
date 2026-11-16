@@ -1,11 +1,6 @@
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Entry point for the appointment system. No UI or menus - just a short
- * scripted simulation in main() that creates objects, exercises them and
- * prints the results.
- */
 public class AssignmentOne {
 
     public static void main(String[] args) {
@@ -19,7 +14,6 @@ public class AssignmentOne {
         demonstrateAppointments();
     }
 
-    /** Part 3: make a mix of professionals and print their details. */
     private static void demonstrateProfessionals() {
         System.out.println("========== PART 3: HEALTH PROFESSIONALS ==========");
         System.out.println();
@@ -74,7 +68,6 @@ public class AssignmentOne {
         System.out.println();
     }
 
-    /** Part 6: appointment management end-to-end, normal and error cases. */
     private static void demonstrateAppointments() {
         System.out.println("========== PART 6: APPOINTMENT MANAGEMENT ==========");
         System.out.println();
@@ -162,7 +155,6 @@ public class AssignmentOne {
         System.out.println("============================================");
     }
 
-    /** Prints a list of appointments, or a note when it's empty. */
     private static void printAppointments(List<Appointment> appointments) {
         if (appointments.isEmpty()) {
             System.out.println("(no appointments)");

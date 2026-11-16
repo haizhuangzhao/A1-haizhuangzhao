@@ -1,20 +1,10 @@
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * A surgeon - a doctor who performs operations. Keeps a registration number
- * for their surgical licence.
- */
 public class Surgeon extends HealthProfessional {
 
     private final String registrationNumber;
 
-    /**
-     * @param id                 numeric id
-     * @param name               full name
-     * @param workingDays        days of the week they work
-     * @param registrationNumber surgical registration number
-     */
     public Surgeon(String id, String name, List<String> workingDays,
             String registrationNumber) {
         super(id, name, workingDays);
@@ -24,7 +14,6 @@ public class Surgeon extends HealthProfessional {
         this.registrationNumber = registrationNumber;
     }
 
-    /** Defaults to a Mon-Fri week. */
     public Surgeon(String id, String name, String registrationNumber) {
         this(id, name, Arrays.asList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"),
                 registrationNumber);
@@ -34,7 +23,6 @@ public class Surgeon extends HealthProfessional {
         return registrationNumber;
     }
 
-    /** Only surgeons perform operations. */
     public String performSurgery(String patientName, String procedure) {
         return getName() + " performed a " + procedure + " on " + patientName + ".";
     }
