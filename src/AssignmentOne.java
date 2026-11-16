@@ -9,9 +9,9 @@ import java.util.List;
 public class AssignmentOne {
 
     public static void main(String[] args) {
-        System.out.println("==================================================");
-        System.out.println("HEALTH SERVICE APPOINTMENT SYSTEM - DEMONSTRATION");
-        System.out.println("==================================================");
+        System.out.println("============================================");
+        System.out.println("   HEALTH SERVICE APPOINTMENT SYSTEM DEMO   ");
+        System.out.println("============================================");
         System.out.println();
 
         demonstrateProfessionals();
@@ -21,38 +21,41 @@ public class AssignmentOne {
 
     /** Part 3: make a mix of professionals and print their details. */
     private static void demonstrateProfessionals() {
-        System.out.println("---- PART 3: HEALTH PROFESSIONALS ----");
+        System.out.println("========== PART 3: HEALTH PROFESSIONALS ==========");
         System.out.println();
 
         // three general practitioners
-        GeneralPractitioner gp1 = new GeneralPractitioner(
-                "1001", "Dr. Emily Carter", "GP12345");
-        GeneralPractitioner gp2 = new GeneralPractitioner(
-                "1002", "Dr. James Wilson", "GP67890");
-        GeneralPractitioner gp3 = new GeneralPractitioner(
-                "1003", "Dr. Sarah Thompson", "GP11223");
+        GeneralPractitioner gpDou = new GeneralPractitioner(
+                "1001", "Dr. Dou", "GP10001");
+        GeneralPractitioner gpXie = new GeneralPractitioner(
+                "1002", "Dr. Xie", "GP10002");
+        GeneralPractitioner gpRunge = new GeneralPractitioner(
+                "1003", "Dr. Runge", "GP10003");
 
-        // one or two of each other type
-        Specialist cardiologist = new Specialist(
-                "2001", "Dr. Michael Chen",
+        // two specialists: cardiology and paediatrics
+        Specialist cardiologistWang = new Specialist(
+                "2001", "Dr. Wang",
                 Arrays.asList("Monday", "Wednesday", "Friday"), "Cardiology");
-        Specialist paediatrician = new Specialist(
-                "2002", "Dr. Olivia Brown", "Paediatrics");
+        Specialist paediatricianXing = new Specialist(
+                "2002", "Dr. Xing", "Paediatrics");
 
-        Surgeon surgeon = new Surgeon(
-                "3001", "Dr. David Miller",
+        // one surgeon
+        Surgeon surgeonQiu = new Surgeon(
+                "3001", "Dr. Qiu",
                 Arrays.asList("Tuesday", "Thursday"), "SURG9001");
 
-        Nurse nurse1 = new Nurse(
-                "4001", "Nurse Anna White",
+        // two nurses
+        Nurse nurseLiu = new Nurse(
+                "4001", "Nurse Liu",
                 Arrays.asList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"),
                 "General Ward");
-        Nurse nurse2 = new Nurse(
-                "4002", "Nurse Lucy Green", "Emergency Ward");
+        Nurse nurseSun = new Nurse(
+                "4002", "Nurse Sun", "Emergency Ward");
 
         // all the different types go in one list of the base type
         List<HealthProfessional> professionals = Arrays.asList(
-                gp1, gp2, gp3, cardiologist, paediatrician, surgeon, nurse1, nurse2);
+                gpDou, gpXie, gpRunge, cardiologistWang, paediatricianXing,
+                surgeonQiu, nurseLiu, nurseSun);
 
         System.out.println("Full details of all health professionals:");
         System.out.println("------------------------------------------");
@@ -64,56 +67,57 @@ public class AssignmentOne {
         // each type does its own thing
         System.out.println("Demonstrating type-specific behaviour:");
         System.out.println("--------------------------------------");
-        System.out.println(gp1.prescribeMedication("Patient A", "Amoxicillin"));
-        System.out.println(cardiologist.refer("Patient B", "Dr. David Miller"));
-        System.out.println(surgeon.performSurgery("Patient C", "appendectomy"));
-        System.out.println(nurse1.takeBloodSample("Patient D"));
+        System.out.println(gpDou.prescribeMedication("John", "amoxicillin"));
+        System.out.println(cardiologistWang.refer("Lily", "Dr. Qiu"));
+        System.out.println(surgeonQiu.performSurgery("Tom", "appendectomy"));
+        System.out.println(nurseLiu.takeBloodSample("Mary"));
         System.out.println();
     }
 
     /** Part 6: appointment management end-to-end, normal and error cases. */
     private static void demonstrateAppointments() {
-        System.out.println("---- PART 6: APPOINTMENT MANAGEMENT ----");
+        System.out.println("========== PART 6: APPOINTMENT MANAGEMENT ==========");
         System.out.println();
 
         Clinic clinic = new Clinic();
 
-        GeneralPractitioner gp1 = new GeneralPractitioner("1001", "Dr. Emily Carter", "GP12345");
-        GeneralPractitioner gp2 = new GeneralPractitioner("1002", "Dr. James Wilson", "GP67890");
-        Specialist cardiologist = new Specialist(
-                "2001", "Dr. Michael Chen",
+        GeneralPractitioner gpDou = new GeneralPractitioner("1001", "Dr. Dou", "GP10001");
+        GeneralPractitioner gpXie = new GeneralPractitioner("1002", "Dr. Xie", "GP10002");
+        Specialist cardiologistWang = new Specialist(
+                "2001", "Dr. Wang",
                 Arrays.asList("Monday", "Wednesday", "Friday"), "Cardiology");
-        Surgeon surgeon = new Surgeon(
-                "3001", "Dr. David Miller",
+        Surgeon surgeonQiu = new Surgeon(
+                "3001", "Dr. Qiu",
                 Arrays.asList("Tuesday", "Thursday"), "SURG9001");
-        Nurse nurse1 = new Nurse("4001", "Nurse Anna White", "General Ward");
+        Nurse nurseLiu = new Nurse("4001", "Nurse Liu", "General Ward");
 
-        Patient p1 = new Patient("John Smith", "0412345678");
-        Patient p2 = new Patient("Jane Doe", "0498765432");
-        Patient p3 = new Patient("Alex Lee", "0422334455");
-        Patient p4 = new Patient("Maria Garcia", "0433445566");
+        // patients
+        Patient john = new Patient("John", "0412345678");
+        Patient lily = new Patient("Lily", "0498765432");
+        Patient tom = new Patient("Tom", "0422334455");
+        Patient mary = new Patient("Mary", "0433445566");
 
         System.out.println("Adding appointments:");
         System.out.println("---------------------");
         // 08:00 = 480, 08:30 = 510, 09:00 = 540, 09:30 = 570
-        System.out.println(clinic.addAppointment(p1, gp1, 480));
-        System.out.println(clinic.addAppointment(p2, cardiologist, 510));
-        System.out.println(clinic.addAppointment(p3, surgeon, 540));
-        System.out.println(clinic.addAppointment(p4, nurse1, 480));
-        System.out.println(clinic.addAppointment(p2, gp2, 570));
+        System.out.println(clinic.addAppointment(john, gpDou, 480));
+        System.out.println(clinic.addAppointment(lily, cardiologistWang, 510));
+        System.out.println(clinic.addAppointment(tom, surgeonQiu, 540));
+        System.out.println(clinic.addAppointment(mary, nurseLiu, 480));
+        System.out.println(clinic.addAppointment(lily, gpXie, 570));
         System.out.println();
 
         System.out.println("Error case - double-booking a professional:");
         System.out.println("--------------------------------------------");
-        // gp1 already booked at 08:00 (480)
-        System.out.println(clinic.addAppointment(new Patient("Someone Else", "0455667788"),
-                gp1, 480));
+        // Dr. Dou is already booked at 08:00 (480)
+        System.out.println(clinic.addAppointment(new Patient("Ben", "0455667788"),
+                gpDou, 480));
         System.out.println();
 
         System.out.println("Error case - booking outside clinic hours:");
         System.out.println("--------------------------------------------");
         // 16:30 (990) is outside 08:00-16:00
-        System.out.println(clinic.addAppointment(p1, gp1, 990));
+        System.out.println(clinic.addAppointment(john, gpDou, 990));
         System.out.println();
 
         System.out.println("All appointments (insertion order):");
@@ -136,8 +140,8 @@ public class AssignmentOne {
         printAppointments(clinic.getAppointmentsByPatient("0498765432"));
         System.out.println();
 
-        System.out.println("Cancelling an appointment (professional 1001 at 08:00):");
-        System.out.println("----------------------------------------------------------");
+        System.out.println("Cancelling an appointment (Dr. Dou at 08:00):");
+        System.out.println("------------------------------------------------");
         System.out.println(clinic.cancelAppointment("1001", 480));
         System.out.println();
 
@@ -153,9 +157,9 @@ public class AssignmentOne {
 
         System.out.println("Total appointments remaining: " + clinic.getAppointmentCount());
         System.out.println();
-        System.out.println("==================================================");
-        System.out.println("END OF DEMONSTRATION");
-        System.out.println("==================================================");
+        System.out.println("============================================");
+        System.out.println("              END OF DEMONSTRATION          ");
+        System.out.println("============================================");
     }
 
     /** Prints a list of appointments, or a note when it's empty. */
