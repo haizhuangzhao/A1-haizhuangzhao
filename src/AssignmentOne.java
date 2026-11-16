@@ -18,7 +18,6 @@ public class AssignmentOne {
         System.out.println("========== PART 3: HEALTH PROFESSIONALS ==========");
         System.out.println();
 
-        // three general practitioners
         GeneralPractitioner gpDou = new GeneralPractitioner(
                 "1001", "Dr. Dou", "GP10001");
         GeneralPractitioner gpXie = new GeneralPractitioner(
@@ -26,19 +25,16 @@ public class AssignmentOne {
         GeneralPractitioner gpRunge = new GeneralPractitioner(
                 "1003", "Dr. Runge", "GP10003");
 
-        // two specialists: cardiology and paediatrics
         Specialist cardiologistWang = new Specialist(
                 "2001", "Dr. Wang",
                 Arrays.asList("Monday", "Wednesday", "Friday"), "Cardiology");
         Specialist paediatricianXing = new Specialist(
                 "2002", "Dr. Xing", "Paediatrics");
 
-        // one surgeon
         Surgeon surgeonQiu = new Surgeon(
                 "3001", "Dr. Qiu",
                 Arrays.asList("Tuesday", "Thursday"), "SURG9001");
 
-        // two nurses
         Nurse nurseLiu = new Nurse(
                 "4001", "Nurse Liu",
                 Arrays.asList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"),
@@ -46,7 +42,6 @@ public class AssignmentOne {
         Nurse nurseSun = new Nurse(
                 "4002", "Nurse Sun", "Emergency Ward");
 
-        // all the different types go in one list of the base type
         List<HealthProfessional> professionals = Arrays.asList(
                 gpDou, gpXie, gpRunge, cardiologistWang, paediatricianXing,
                 surgeonQiu, nurseLiu, nurseSun);
@@ -58,7 +53,6 @@ public class AssignmentOne {
             System.out.println();
         }
 
-        // each type does its own thing
         System.out.println("Demonstrating type-specific behaviour:");
         System.out.println("--------------------------------------");
         System.out.println(gpDou.prescribeMedication("John", "amoxicillin"));
@@ -84,7 +78,6 @@ public class AssignmentOne {
                 Arrays.asList("Tuesday", "Thursday"), "SURG9001");
         Nurse nurseLiu = new Nurse("4001", "Nurse Liu", "General Ward");
 
-        // patients
         Patient john = new Patient("John", "0412345678");
         Patient lily = new Patient("Lily", "0498765432");
         Patient tom = new Patient("Tom", "0422334455");
@@ -92,7 +85,6 @@ public class AssignmentOne {
 
         System.out.println("Adding appointments:");
         System.out.println("---------------------");
-        // 08:00 = 480, 08:30 = 510, 09:00 = 540, 09:30 = 570
         System.out.println(clinic.addAppointment(john, gpDou, 480));
         System.out.println(clinic.addAppointment(lily, cardiologistWang, 510));
         System.out.println(clinic.addAppointment(tom, surgeonQiu, 540));
@@ -102,14 +94,12 @@ public class AssignmentOne {
 
         System.out.println("Error case - double-booking a professional:");
         System.out.println("--------------------------------------------");
-        // Dr. Dou is already booked at 08:00 (480)
         System.out.println(clinic.addAppointment(new Patient("Ben", "0455667788"),
                 gpDou, 480));
         System.out.println();
 
         System.out.println("Error case - booking outside clinic hours:");
         System.out.println("--------------------------------------------");
-        // 16:30 (990) is outside 08:00-16:00
         System.out.println(clinic.addAppointment(john, gpDou, 990));
         System.out.println();
 
