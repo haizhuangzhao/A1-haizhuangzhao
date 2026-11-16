@@ -4,143 +4,72 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Represents a generic health professional working for the health service.
+ * Base class for every health professional in the system.
+ * Holds the details all professionals share - an id, a name, and the days
+ * of the week they work. The specific types (GP, specialist, etc.) extend
+ * this class so the common stuff is only written once.
  *
- * <p>This is the abstract base class for every specific type of health
- * professional in the system (general practitioners, specialists, surgeons,
- * nurses, and so on). It captures the data and behaviour that is common to
- * <em>all</em> professionals, so that the more specific subclasses do not have
- * to repeat it.</p>
- *
- * <p>A professional is always identifiable by a numeric ID and has a name.
- * Every professional also works on a fixed set of days each week (for example
- * Monday, Wednesday and Friday). Those days are stored as a read-only
- * collection so that external code can inspect them but can never modify them
- * and put an object into an invalid state.</p>
- *
- * <p>The class is {@code abstract} because it never makes sense to create a
- * "plain" health professional with no speciality: every real worker has a
- * specific role. Subclasses are forced to provide their own description of
- * what kind of professional they are by implementing
- * {@link #getProfessionType()}.</p>
- *
- * <p><b>Four pillars of OOP used here:</b></p>
- * <ul>
- *   <li><b>Encapsulation</b> – all fields are {@code private}; the only way to
- *       read them is through getters, and the only way to write them is
- *       through the constructors, which validate the arguments.</li>
- *   <li><b>Abstraction</b> – the class is {@code abstract} and declares an
- *       abstract method {@link #getProfessionType()}, hiding the concrete
- *       "kind of worker" detail from the rest of the program.</li>
- * </ul>
+ * It's abstract because there's no such thing as a "generic" professional
+ * with no speciality - everyone has a specific role.
  */
 public abstract class HealthProfessional {
 
-    /** The minimum number of working days a professional must have. */
-    private static final int MIN_WORKING_DAYS = 1;
-
-    /** The numeric identifier of the professional (numbers only). */
     private final String id;
-
-    /** The full name of the professional. */
     private final String name;
-
-    /**
-     * The days of the week the professional works. Stored as a read-only list
-     * so callers cannot alter the schedule after the object is created.
-     */
     private final List<String> workingDays;
 
     /**
-     * Creates a health professional with the given id, name and working days.
+     * Main constructor. Validates everything so an object can't be made with
+     * missing or bad data.
      *
-     * @param id          the numeric identifier of the professional; must not
-     *                    be null or blank and must consist of digits only
-     * @param name        the full name of the professional; must not be null
-     *                    or blank
-     * @param workingDays the days of the week the professional works; must not
-     *                    be null and must contain at least one day
-     * @throws IllegalArgumentException if any argument is invalid
+     * @param id          numeric id, numbers only
+     * @param name        the professional's full name
+     * @param workingDays the days they work, e.g. "Monday"
      */
     public HealthProfessional(String id, String name, List<String> workingDays) {
         if (id == null || id.isBlank()) {
             throw new IllegalArgumentException("Professional ID cannot be empty.");
         }
         if (!id.matches("\\d+")) {
-            throw new IllegalArgumentException("Professional ID must contain numbers only: " + id);
+            throw new IllegalArgumentException("Professional ID must be numbers only: " + id);
         }
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Professional name cannot be empty.");
         }
         if (workingDays == null || workingDays.isEmpty()) {
-            throw new IllegalArgumentException(
-                    "A professional must work on at least " + MIN_WORKING_DAYS + " day.");
+            throw new IllegalArgumentException("A professional must work on at least one day.");
         }
 
         this.id = id;
         this.name = name;
-        // Defensive copy: the caller's list cannot affect our internal state.
+        // copy the list so callers can't change the schedule behind our back
         this.workingDays = Collections.unmodifiableList(new ArrayList<>(workingDays));
     }
 
-    /**
-     * Creates a health professional with a default schedule of Monday to
-     * Friday. This convenience constructor is useful because many
-     * professionals work a standard weekday schedule.
-     *
-     * @param id   the numeric identifier of the professional
-     * @param name the full name of the professional
-     */
+    /** Convenience constructor - defaults to a standard Mon-Fri week. */
     public HealthProfessional(String id, String name) {
         this(id, name, Arrays.asList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"));
     }
 
-    /**
-     * Returns the numeric identifier of the professional.
-     *
-     * @return the id
-     */
     public String getId() {
         return id;
     }
 
-    /**
-     * Returns the full name of the professional.
-     *
-     * @return the name
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * Returns an unmodifiable view of the days of the week this professional
-     * works. Callers can read the schedule but can never change it.
-     *
-     * @return the working days
-     */
+    /** Returns the working days as a read-only list. */
     public List<String> getWorkingDays() {
         return workingDays;
     }
 
-    /**
-     * Returns a short label describing what kind of health professional this
-     * is (for example "General Practitioner" or "Nurse"). Each concrete
-     * subclass must provide its own implementation.
-     *
-     * @return the type name of the professional
-     */
+    /** Each subclass reports what kind of professional it actually is. */
     public abstract String getProfessionType();
 
     /**
-     * Two health professionals are considered equal when they have the same
-     * id. This is how the system decides whether two references point to "the
-     * same person", which is essential for preventing a professional from
-     * being double-booked.
-     *
-     * @param other the object to compare with
-     * @return {@code true} if the other object is a HealthProfessional with
-     *         the same id
+     * Two professionals are the same person if their id matches. This is how
+     * the clinic stops the same person being double-booked.
      */
     @Override
     public boolean equals(Object other) {
@@ -154,24 +83,14 @@ public abstract class HealthProfessional {
         return this.id.equals(that.id);
     }
 
-    /**
-     * Returns a hash code consistent with {@link #equals(Object)}. Objects
-     * with equal ids have equal hash codes.
-     *
-     * @return the hash code based on the id
-     */
     @Override
     public int hashCode() {
         return id.hashCode();
     }
 
     /**
-     * Returns a human-readable description of the professional, including the
-     * kind of professional, the name, the id and the working days. This is
-     * what is shown when the object is printed, for example with
-     * {@code System.out.println(doctorA)}.
-     *
-     * @return a readable summary of the professional
+     * Readable summary shown when the object is printed - the type, name, id
+     * and working days.
      */
     @Override
     public String toString() {

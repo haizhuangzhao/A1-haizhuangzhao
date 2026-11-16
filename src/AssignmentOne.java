@@ -2,21 +2,12 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * The entry point for the appointment system. This class demonstrates, in
- * {@code main}, both Part 3 (working with health professional objects) and
- * Part 6 (working with appointments end-to-end).
- *
- * <p>There is no user interface, menu, login or data saving — this main method
- * is a short, scripted simulation that creates objects, exercises their
- * behaviour, and prints the results to the console.</p>
+ * Entry point for the appointment system. No UI or menus - just a short
+ * scripted simulation in main() that creates objects, exercises them and
+ * prints the results.
  */
 public class AssignmentOne {
 
-    /**
-     * Runs the demonstration of the appointment system.
-     *
-     * @param args command-line arguments (not used)
-     */
     public static void main(String[] args) {
         System.out.println("==================================================");
         System.out.println("HEALTH SERVICE APPOINTMENT SYSTEM - DEMONSTRATION");
@@ -28,16 +19,12 @@ public class AssignmentOne {
         demonstrateAppointments();
     }
 
-    /**
-     * Part 3: creates a realistic mix of health professionals and prints their
-     * full details, showing how the different types can be stored and
-     * processed together through the common base type.
-     */
+    /** Part 3: make a mix of professionals and print their details. */
     private static void demonstrateProfessionals() {
         System.out.println("---- PART 3: HEALTH PROFESSIONALS ----");
         System.out.println();
 
-        // Create three general practitioners.
+        // three general practitioners
         GeneralPractitioner gp1 = new GeneralPractitioner(
                 "1001", "Dr. Emily Carter", "GP12345");
         GeneralPractitioner gp2 = new GeneralPractitioner(
@@ -45,7 +32,7 @@ public class AssignmentOne {
         GeneralPractitioner gp3 = new GeneralPractitioner(
                 "1003", "Dr. Sarah Thompson", "GP11223");
 
-        // Create one or two of each other type.
+        // one or two of each other type
         Specialist cardiologist = new Specialist(
                 "2001", "Dr. Michael Chen",
                 Arrays.asList("Monday", "Wednesday", "Friday"), "Cardiology");
@@ -63,8 +50,7 @@ public class AssignmentOne {
         Nurse nurse2 = new Nurse(
                 "4002", "Nurse Lucy Green", "Emergency Ward");
 
-        // Polymorphism: store all of the different types together in a single
-        // list of the common base type.
+        // all the different types go in one list of the base type
         List<HealthProfessional> professionals = Arrays.asList(
                 gp1, gp2, gp3, cardiologist, paediatrician, surgeon, nurse1, nurse2);
 
@@ -75,8 +61,7 @@ public class AssignmentOne {
             System.out.println();
         }
 
-        // Demonstrate that each type responds in its own way when treated
-        // through the common type, and that each has its own behaviour.
+        // each type does its own thing
         System.out.println("Demonstrating type-specific behaviour:");
         System.out.println("--------------------------------------");
         System.out.println(gp1.prescribeMedication("Patient A", "Amoxicillin"));
@@ -86,17 +71,13 @@ public class AssignmentOne {
         System.out.println();
     }
 
-    /**
-     * Part 6: demonstrates the appointment management end-to-end, covering the
-     * normal cases and the error cases.
-     */
+    /** Part 6: appointment management end-to-end, normal and error cases. */
     private static void demonstrateAppointments() {
         System.out.println("---- PART 6: APPOINTMENT MANAGEMENT ----");
         System.out.println();
 
         Clinic clinic = new Clinic();
 
-        // Re-create the professionals needed for booking.
         GeneralPractitioner gp1 = new GeneralPractitioner("1001", "Dr. Emily Carter", "GP12345");
         GeneralPractitioner gp2 = new GeneralPractitioner("1002", "Dr. James Wilson", "GP67890");
         Specialist cardiologist = new Specialist(
@@ -107,7 +88,6 @@ public class AssignmentOne {
                 Arrays.asList("Tuesday", "Thursday"), "SURG9001");
         Nurse nurse1 = new Nurse("4001", "Nurse Anna White", "General Ward");
 
-        // Patients.
         Patient p1 = new Patient("John Smith", "0412345678");
         Patient p2 = new Patient("Jane Doe", "0498765432");
         Patient p3 = new Patient("Alex Lee", "0422334455");
@@ -115,7 +95,7 @@ public class AssignmentOne {
 
         System.out.println("Adding appointments:");
         System.out.println("---------------------");
-        // 08:00 = 480, 08:30 = 510, 09:00 = 540, etc.
+        // 08:00 = 480, 08:30 = 510, 09:00 = 540, 09:30 = 570
         System.out.println(clinic.addAppointment(p1, gp1, 480));
         System.out.println(clinic.addAppointment(p2, cardiologist, 510));
         System.out.println(clinic.addAppointment(p3, surgeon, 540));
@@ -125,14 +105,14 @@ public class AssignmentOne {
 
         System.out.println("Error case - double-booking a professional:");
         System.out.println("--------------------------------------------");
-        // gp1 is already booked at 08:00 (480).
+        // gp1 already booked at 08:00 (480)
         System.out.println(clinic.addAppointment(new Patient("Someone Else", "0455667788"),
                 gp1, 480));
         System.out.println();
 
         System.out.println("Error case - booking outside clinic hours:");
         System.out.println("--------------------------------------------");
-        // 16:30 (990) is outside the 08:00-16:00 schedule.
+        // 16:30 (990) is outside 08:00-16:00
         System.out.println(clinic.addAppointment(p1, gp1, 990));
         System.out.println();
 
@@ -178,11 +158,7 @@ public class AssignmentOne {
         System.out.println("==================================================");
     }
 
-    /**
-     * Prints a list of appointments, or a message when the list is empty.
-     *
-     * @param appointments the appointments to print
-     */
+    /** Prints a list of appointments, or a note when it's empty. */
     private static void printAppointments(List<Appointment> appointments) {
         if (appointments.isEmpty()) {
             System.out.println("(no appointments)");
