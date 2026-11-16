@@ -25,3 +25,8 @@ bin/
 
 # Zip archives (source of truth is the project folder, not the zip)
 *.zip
+
+# Personal notes / video scripts (not part of the submission)
+视频讲解要点.md
+视频讲解流程.md
+视频讲稿.md

@@ -50,13 +50,3 @@ java -cp src AssignmentOne
 - **Clinic**: manages appointments — add (with double-booking and opening-hours
   checks), view all / filter by professional id or patient phone, sort by time,
   cancel by professional+time or by patient phone.
-
-## Four pillars of OOP (video summary)
-
-1. **Encapsulation** — private fields, getters, constructor validation,
-   defensive copies, unmodifiable lists.
-2. **Inheritance** — the four concrete types extend `HealthProfessional`.
-3. **Polymorphism** — base-type references handle all subtypes; overridden
-   `toString`/`getProfessionType` and type-specific behaviour methods.
-4. **Abstraction** — `HealthProfessional` is abstract and declares the abstract
-   method `getProfessionType()`.
